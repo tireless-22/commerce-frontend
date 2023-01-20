@@ -1,0 +1,92 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  password String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  cart Cart[]
+  order Order[]
+}
+
+
+model Item{
+  id    Int     @id @default(autoincrement())
+  name String @unique
+  description String
+  category String
+  price Int
+  image_id String?
+  quantity Int
+  createdAt DateTime @default(now()) @map("created_at")
+  cart Cart[]
+  orderItem OrderItem[]
+
+
+}
+
+
+model Cart{
+   user     User     @relation(fields: [userId], references: [id])
+  userId    Int
+
+
+ item     Item     @relation(fields: [itemId], references: [id])
+  itemId    Int
+  quantity Int @default(1)
+  createdAt DateTime @default(now()) @map("created_at")
+
+
+  @@id([ userId,itemId])
+}
+
+
+model Order{
+   id    Int     @id @default(autoincrement())
+   user     User     @relation(fields: [userId], references: [id])
+  userId    Int
+  total_amount Int
+   createdAt DateTime @default(now()) @map("created_at")
+   orderItem OrderItem[]
+
+}
+
+
+model OrderItem{
+  order Order @relation(fields: [orderId],references: [id])
+  orderId Int
+
+
+
+
+ item     Item     @relation(fields: [itemId], references: [id])
+  itemId    Int
+  quantity Int @default(1)
+  createdAt DateTime @default(now()) @map("created_at")
+
+
+  @@id([ orderId,itemId])
+
+
+
+
+
+}
+
+
+
+
+
+
