@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import { Button, notification } from "antd";
+import Router from "next/router";
 
 const Login = () => {
   const [email, setEmail] = React.useState("");
@@ -31,6 +32,12 @@ const Login = () => {
       )
       .then((res) => {
         if (res.data.stat) {
+          localStorage.setItem("email", email);
+          localStorage.setItem("role", "user");
+          localStorage.setItem("firstName", res.data.firstName);
+          localStorage.setItem("id",res.data.id)
+          
+          Router.push("/user/items")
 
           console.log("navigate to other page");
         } else {
