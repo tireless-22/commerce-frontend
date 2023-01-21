@@ -35,7 +35,11 @@ const NavbarUser = () => {
     <div className="main-wrapper bg-blue-400">
       <div className="width-80">
         <div className="user-navbar">
-          <div className="flex align-middle p-2">
+          <div className="flex align-middle p-2"
+            onClick={() => {
+              Router.push("/user/items")
+            }}
+          >
             <Image src={logo} alt="logo" height={20} width={140} />
           </div>
 

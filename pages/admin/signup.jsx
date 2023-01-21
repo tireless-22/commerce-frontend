@@ -41,17 +41,16 @@ const Signup = () => {
 
     axios
       .post(
-        `http://localhost:8080/untitled1/signup?mail=${mail}&password=${password1}&firstName=${firstName}&lastName=${lastName}&role=user`
+        `http://localhost:8080/untitled1/signup?mail=${mail}&password=${password1}&firstName=${firstName}&lastName=${lastName}&role=admin`
       )
       .then((res) => {
         if (res.data.stat == 0) {
           setErrorMessage(res.data.msg);
         } else {
-          Router.push("/user/login");
+          Router.push("/admin/login");
         }
       });
   };
-
 
   return (
     <div
@@ -93,7 +92,7 @@ const Signup = () => {
           <div className="sign-box-left justify-center align-middle">
             <form className="bg-white mt-24 justify-center align-middle rounded w-5/6">
               <h1 className="text-4xl mb-4 items-center justify-center  font-sans font-semibold mt-4 mb-2">
-                Registration For User
+                Registration For Admin
               </h1>
 
               <div className="flex flex-row">
@@ -196,7 +195,7 @@ const Signup = () => {
                 <div
                   className="text-blue-500"
                   type="submit"
-                  onClick={() => (window.location.href = "/user/login")}
+                  onClick={() => (window.location.href = "/admin/login")}
                 >
                   Login ?
                 </div>
@@ -205,12 +204,12 @@ const Signup = () => {
               {errorMessage != "" && (
                 <div className="flex items-center bg-red-700 p-2 pl-4 pr-4 mt-2  justify-around auth_button_div">
                   <p className="text-white">{errorMessage}</p>
-                </div>
+                </div> 
               )}
             </form>
           </div>
         </div>
-      </div>
+      </div> 
     </div>
   );
 };

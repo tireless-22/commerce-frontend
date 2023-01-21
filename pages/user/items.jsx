@@ -13,6 +13,7 @@ import { IoAddCircleSharp } from "react-icons/io5";
 import { GrSubtractCircle } from "react-icons/gr";
 import { IoAddCircleOutline } from "react-icons/io5";
 
+import { IoArrowForward } from "react-icons/io5";
 
 import axios from "axios";
 import Router from "next/router";
@@ -66,7 +67,7 @@ const Items = () => {
          `http://localhost:8080/untitled1/addItemsToCart?userId=${userId}&itemId=${id}&quantity=1`
        )
        .then((res) => {
-        //  Router.reload()
+       
          setItemId(id);
          
        });
@@ -76,12 +77,41 @@ const Items = () => {
   }
   
 
-  const removeItem = (id) => {
+  const updateItem = (id, quantity) => {
+    if (quantity == 0) {
+      return;
+    }
     console.log(id);
     console.log(userId)
-    
-    
+
+     axios
+       .post(
+         `http://localhost:8080/untitled1/modifyCartItem?userId=${userId}&itemId=${id}&quantity=${quantity}`
+       )
+       .then((res) => {
+     
+         setItemId(parseInt(id) + Math.random() * 5);
+         
+       });
+      
   }
+
+
+   const removeItem = (id) => {
+     console.log(id);
+     console.log(userId);
+
+     axios
+       .post(`http://localhost:8080/untitled1/cartRemoveItem?userId=${userId}&itemId=${id}`)
+       .then((res) => {
+       
+         setItemId(parseInt(id) + Math.random() * 5);
+       });
+
+     // http://localhost:8080/untitled1/modifyCartItem?userId=2&itemId=1&quantity=19
+   };
+  
+  
 
 
 
@@ -105,7 +135,9 @@ const Items = () => {
             <div className="flex justify-center mt-2">
               <p>{item.description}</p>
             </div>
-            <div></div>
+            <div className="flex justify-center mt-2">
+              <p>₹{item.price}</p>
+            </div>
             {item.quantity === 0 ? (
               <div
                 onClick={() => {
@@ -121,24 +153,45 @@ const Items = () => {
             ) : (
               <div className="flex justify-around align-middle flex-row">
                 <div className="flex flex-row">
-                  <div className="mr-3 pt-1">
+                  <div
+                    className="mr-3 pt-1"
+                    onClick={() => {
+                      updateItem(item.id, item.quantity - 1);
+                    }}
+                  >
                     <GrSubtractCircle size="30" />
                   </div>
 
-                  <div className="pt-1"> 
+                  <div className="pt-1">
                     <p className="text-lg">{item.quantity}</p>
                   </div>
 
-                  <div className="ml-3 ">
+                  <div
+                    className="ml-3 "
+                    onClick={() => {
+                      updateItem(item.id, item.quantity + 1);
+                    }}
+                  >
                     <IoAddCircleOutline size="38" />
                   </div>
                 </div>
-                  <div className="bg-red-500 rounded-lg p-2 pr-4 pl-4"
-                    onClick={() => {
-                    removeItem(item.id)
+                <div
+                  className="bg-red-500 rounded-lg p-2 pr-4 pl-4"
+                  onClick={() => {
+                    removeItem(item.id);
                   }}
-                  >
+                >
                   Remove
+                </div>
+
+                <div
+                  className="bg-green-500 rounded-lg p-2 flex flex-row pr-4 pl-4"
+                  onClick={() => {
+                    Router.push("/user/cart");
+                  }}
+                >
+                  Cart
+                  <IoArrowForward size="25"/>
                 </div>
               </div>
             )}
