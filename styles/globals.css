@@ -231,3 +231,29 @@
 }
 
 
+
+
+
+.order-items{
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin: auto;
+  /* background-color: red; */
+}
+
+.order-item{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+
+  
+}
+
+.order-item-item{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+

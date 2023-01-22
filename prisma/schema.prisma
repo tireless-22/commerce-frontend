@@ -19,8 +19,9 @@ model User {
   role      String
   createdAt DateTime @default(now()) @map("created_at")
 
-  cart  Cart[]
-  order Orders[]
+  cart       Cart[]
+  order      Orders[]
+  orderItems OrderItem[]
 }
 
 model Item {
@@ -58,13 +59,21 @@ model Orders {
 }
 
 model OrderItem {
-  order   Orders  @relation(fields: [orderId], references: [id])
+  order   Orders @relation(fields: [orderId], references: [id])
   orderId String
 
-  item      Item     @relation(fields: [itemId], references: [id])
-  itemId    Int
-  quantity  Int      @default(1)
+  item   Item @relation(fields: [itemId], references: [id])
+  itemId Int
 
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+
+  itemName String
+
+  price    Int
+  image_id String
+  quantity Int    @default(1)
+    createdAt    DateTime    @default(now()) @map("created_at")
 
   @@id([orderId, itemId])
 }

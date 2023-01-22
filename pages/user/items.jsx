@@ -80,7 +80,6 @@ const Items = () => {
         setItemId(parseInt(id) + Math.random() * 5);
       });
   };
-
   const removeItem = (id) => {
     console.log(id);
     console.log(userId);
@@ -92,14 +91,10 @@ const Items = () => {
       .then((res) => {
         setItemId(parseInt(id) + Math.random() * 5);
       });
-
-    // http://localhost:8080/untitled1/modifyCartItem?userId=2&itemId=1&quantity=19
   };
-
   if (!listItems) {
     return <Loading />;
   }
-
   return (
     <div>
       <NavbarUser />
@@ -184,5 +179,4 @@ const Items = () => {
     </div>
   );
 };
-
 export default Items;

@@ -61,7 +61,14 @@ const NavbarUser = () => {
           </div>
 
           <div className="flex align-middle flex-row pt-4">
-            <h3 className="text-black pt-2  text-2xl cursor-pointer">Orders</h3>
+            <h3
+              className="text-black pt-2  text-2xl cursor-pointer"
+              onClick={() => {
+                Router.push("/user/orders");
+              }}
+            >
+              Orders
+            </h3>
           </div>
 
           <div className="flex align-middle flex-row pt-4">
