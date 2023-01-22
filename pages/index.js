@@ -42,9 +42,9 @@ const Index = () => {
 
             <Link href="/admin/login">
               <div className="bg-blue-500 p-4 m-8 rounded-2xl flex justify-center">
-                <div className="text-2xl">Admin</div>
+                <div className="text-2xl text-white">Admin</div>
                 <div className="flex justify-center align-middle pt-2 ml-2">
-                  <FaArrowRight />
+                  <FaArrowRight color="white" />
                 </div>
               </div>
             </Link>
@@ -67,9 +67,9 @@ const Index = () => {
 
             <Link href="/user/login">
               <div className="bg-blue-500 p-4 m-8 rounded-2xl flex justify-center">
-                <div className="text-2xl">Customer</div>
+                <div className="text-2xl text-white">Customer</div>
                 <div className="flex justify-center align-middle pt-2 ml-2">
-                  <FaArrowRight />
+                  <FaArrowRight color="white"/>
                 </div>
               </div>
             </Link>

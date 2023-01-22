@@ -35,92 +35,66 @@ const Items = () => {
     userMail = localStorage.getItem("email");
     userId = localStorage.getItem("id");
 
-
-     role = localStorage.getItem("role");
-     if (role === "admin") {
-       Router.push("/admin/");
-     }
+    role = localStorage.getItem("role");
+    if (role === "admin") {
+      Router.push("/admin/");
+    }
   }
 
-  // const { data: listItems, error: listItemsError } = useSWRImmutable(
-  //   "http://localhost:8080/untitled1/listItems?userId=" + userId,
-  //   getFetcher
-  // );
-  // console.log(listItems);
-
-  const [listItems, setListItems] = useState()
-  const [itemId,setItemId]=useState()
+  const [listItems, setListItems] = useState();
+  const [itemId, setItemId] = useState();
 
   useEffect(() => {
-    axios.post(`http://localhost:8080/untitled1/listItems?userId=${userId}`)
+    axios
+      .post(`http://localhost:8080/untitled1/listItems?userId=${userId}`)
       .then((res) => {
         setListItems(res.data);
-      
-    })
-    },[userId,itemId])
-
-
-
-
-
-
+      });
+  }, [userId, itemId]);
 
   const addNewItem = (id) => {
-    console.log(id)
-    console.log(userId)
+    console.log(id);
+    console.log(userId);
 
-     axios
-       .post(
-         `http://localhost:8080/untitled1/addItemsToCart?userId=${userId}&itemId=${id}&quantity=1`
-       )
-       .then((res) => {
-       
-         setItemId(id);
-         
-       });
-      
-
-
-  }
-  
+    axios
+      .post(
+        `http://localhost:8080/untitled1/addItemsToCart?userId=${userId}&itemId=${id}&quantity=1`
+      )
+      .then((res) => {
+        setItemId(id);
+      });
+  };
 
   const updateItem = (id, quantity) => {
     if (quantity == 0) {
       return;
     }
     console.log(id);
-    console.log(userId)
+    console.log(userId);
 
-     axios
-       .post(
-         `http://localhost:8080/untitled1/modifyCartItem?userId=${userId}&itemId=${id}&quantity=${quantity}`
-       )
-       .then((res) => {
-     
-         setItemId(parseInt(id) + Math.random() * 5);
-         
-       });
-      
-  }
+    axios
+      .post(
+        `http://localhost:8080/untitled1/modifyCartItem?userId=${userId}&itemId=${id}&quantity=${quantity}`
+      )
+      .then((res) => {
+        setItemId(parseInt(id) + Math.random() * 5);
+      });
+  };
 
+  const removeItem = (id) => {
+    console.log(id);
+    console.log(userId);
 
-   const removeItem = (id) => {
-     console.log(id);
-     console.log(userId);
+    axios
+      .post(
+        `http://localhost:8080/untitled1/cartRemoveItem?userId=${userId}&itemId=${id}`
+      )
+      .then((res) => {
+        setItemId(parseInt(id) + Math.random() * 5);
+      });
 
-     axios
-       .post(`http://localhost:8080/untitled1/cartRemoveItem?userId=${userId}&itemId=${id}`)
-       .then((res) => {
-       
-         setItemId(parseInt(id) + Math.random() * 5);
-       });
-
-     // http://localhost:8080/untitled1/modifyCartItem?userId=2&itemId=1&quantity=19
-   };
-  
-  
-
-
+    // http://localhost:8080/untitled1/modifyCartItem?userId=2&itemId=1&quantity=19
+  };
 
   if (!listItems) {
     return <Loading />;
@@ -150,55 +124,57 @@ const Items = () => {
                 onClick={() => {
                   addNewItem(item.id);
                 }}
-                className="bg-blue-500 hover:bg-blue-700 rounded-xl  flex justify-center mt-2 item-center p-2"
+                className="bg-blue-500 hover:bg-blue-700 rounded-xl  flex justify-center mt-2 item-center p-2 cursor-pointer"
               >
-                <div className="flex flex-row">
+                <div className="flex flex-row ">
                   <h3 className="text-xl text-white">Add to Cart</h3>
                   <BsCartPlusFill color="white" size={25} />
                 </div>
               </div>
             ) : (
-              <div className="flex justify-around align-middle flex-row">
+              <div className="flex mt-2 justify-around align-middle flex-row">
                 <div className="flex flex-row">
-                  <div
-                    className="mr-3 pt-1"
-                    onClick={() => {
-                      updateItem(item.id, item.quantity - 1);
-                    }}
-                  >
-                    <GrSubtractCircle size="30" />
+                  <div className="mr-3 pt-1">
+                    <GrSubtractCircle
+                      onClick={() => {
+                        updateItem(item.id, item.quantity - 1);
+                      }}
+                      size="30"
+                      className="cursor-pointer"
+                    />
                   </div>
 
                   <div className="pt-1">
                     <p className="text-lg">{item.quantity}</p>
                   </div>
 
-                  <div
-                    className="ml-3 "
-                    onClick={() => {
-                      updateItem(item.id, item.quantity + 1);
-                    }}
-                  >
-                    <IoAddCircleOutline size="38" />
+                  <div className="ml-3 ">
+                    <IoAddCircleOutline
+                      onClick={() => {
+                        updateItem(item.id, item.quantity + 1);
+                      }}
+                      size="38"
+                      className="cursor-pointer"
+                    />
                   </div>
                 </div>
                 <div
-                  className="bg-red-500 rounded-lg p-2 pr-4 pl-4"
+                  className="bg-red-500 rounded-lg p-2 pr-4 pl-4 cursor-pointer"
                   onClick={() => {
                     removeItem(item.id);
                   }}
                 >
-                  Remove
+                  <h4 className="text-lg text-white">Remove</h4>
                 </div>
 
                 <div
-                  className="bg-green-500 rounded-lg p-2 flex flex-row pr-4 pl-4"
+                  className="bg-green-500 rounded-lg p-2 flex flex-row pr-4 pl-4 cursor-pointer"
                   onClick={() => {
                     Router.push("/user/cart");
                   }}
                 >
-                  Cart
-                  <IoArrowForward size="25"/>
+                  <h4 className="text-lg text-white">Cart</h4>
+                  <IoArrowForward color="white" size="25" />
                 </div>
               </div>
             )}
