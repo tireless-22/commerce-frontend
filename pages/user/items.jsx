@@ -20,6 +20,7 @@ import Router from "next/router";
 const Items = () => {
   let userMail = "";
   let userId = "";
+  let role = "";
 
   if (typeof window !== "undefined") {
     console.log(localStorage.getItem("email"));
@@ -33,6 +34,12 @@ const Items = () => {
 
     userMail = localStorage.getItem("email");
     userId = localStorage.getItem("id");
+
+
+     role = localStorage.getItem("role");
+     if (role === "admin") {
+       Router.push("/admin/");
+     }
   }
 
   // const { data: listItems, error: listItemsError } = useSWRImmutable(

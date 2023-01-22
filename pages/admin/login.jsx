@@ -38,7 +38,7 @@ const Login = () => {
       .then((res) => {
         if (res.data.stat) {
           localStorage.setItem("email", email);
-          localStorage.setItem("role", "user");
+          localStorage.setItem("role", "admin");
           localStorage.setItem("firstName", res.data.firstName);
           localStorage.setItem("id", res.data.id);
 

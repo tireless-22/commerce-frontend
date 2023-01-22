@@ -1,7 +1,7 @@
 import { list } from "postcss";
 import React, { useEffect, useState } from "react";
 import useSWRImmutable from "swr/immutable";
-
+import { v4 as uuidv4 } from "uuid"
 import { getFetcher } from "../../utils/swr";
 import Loading from "../../components/loading";
 import Image from "next/image";
@@ -18,6 +18,10 @@ import Router from "next/router";
 const Cart = () => {
   let userMail = "";
   let userId = "";
+  let role = "";
+
+
+  
 
   if (typeof window !== "undefined") {
     console.log(localStorage.getItem("email"));
@@ -31,10 +35,17 @@ const Cart = () => {
 
     userMail = localStorage.getItem("email");
     userId = localStorage.getItem("id");
+
+    role = localStorage.getItem("role");
+    if (role === "admin") {
+      Router.push("/admin/");
+    }
   }
 
   const [listItems, setListItems] = useState();
   const [itemId, setItemId] = useState();
+
+  const [cartPrice, setCartPrice] = useState(0);
 
   useEffect(() => {
     axios
@@ -42,7 +53,46 @@ const Cart = () => {
       .then((res) => {
         setListItems(res.data);
       });
+
+    axios
+      .post(`http://localhost:8080/untitled1/cartPrice?userId=${userId}`)
+      .then((res) => {
+        setCartPrice(res.data);
+      });
   }, [userId, itemId]);
+
+
+  const placeOrder = () => {
+    
+    const id = uuidv4()
+    console.log(id);
+
+    axios
+      .post(
+        `http://localhost:8080/untitled1/order?id=${id}&userId=${userId}&price=90`
+      )
+      .then((res) => {
+        console.log("hello")
+        // if (success == 0) {
+        //   // delete from that table and add to order table with the uuid
+        //   axios.post().then((res) => {
+        //     console.log(res.data);
+        //   });
+        // } else {
+        //   // error message
+        // }
+      });
+
+
+
+
+
+
+  }
+
+  
+
+
 
   const updateItem = (id, quantity) => {
     if (quantity == 0) {
@@ -153,8 +203,7 @@ const Cart = () => {
                         }}
                       >
                         Remove
-                        </div>
-                     
+                      </div>
                     </div>
                   )}
                 </div>
@@ -162,7 +211,49 @@ const Cart = () => {
             ))}
           </div>
 
-          <div className="cart-right"></div>
+          <div className="cart-right p-4">
+            <div className="cart-right-header bg-black">
+              <h2 className="text-2xl text-white">Price Details</h2>
+            </div>
+
+            <div className="ml-4 mt-4 mr-4 flex flex-row justify-between">
+              <div>
+                <h2 className="text-lg">Price ( {listItems.length} Items)</h2>
+              </div>
+              <div>
+                <h2 className="text-lg">₹ {cartPrice}</h2>
+              </div>
+            </div>
+
+            <div className="ml-4 mb-4 mt-4 mr-4 flex flex-row justify-between">
+              <div>
+                <h2 className="text-lg">Delivery Charges</h2>
+              </div>
+              <div>
+                <h2 className="text-lg">₹ 250</h2>
+              </div>
+            </div>
+
+            <div className="line"></div>
+
+            <div className="ml-4 mt-4 mb-4 mr-4 flex flex-row justify-between">
+              <div>
+                <h2 className="text-2xl">Total Price</h2>
+              </div>
+              <div>
+                <h2 className="text-2xl">₹ {parseInt(cartPrice) + 250}</h2>
+              </div>
+            </div>
+
+            <div className="line"></div>
+
+
+            <button onClick={() => {
+              placeOrder()
+            }}>Place Order
+
+            </button>
+          </div>
         </div>
       </div>
     </div>

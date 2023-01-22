@@ -94,7 +94,7 @@
   height: 100%;
   /* background-color: red;
   */
-  border: 1px solid black;
+  /* border: 1px solid black; */
 
   margin: auto;
 }
@@ -107,7 +107,17 @@
 
 .cart-right {
   display: flex;
+  flex-direction: column;
   flex: 2;
+  /* background-color: green; */
+}
+
+.cart-right-header{
+  display: flex;
+  padding: 10px;
+  padding-left: 20px;
+  /* background-color: white; */
+
 }
 
 
@@ -139,6 +149,12 @@
   
 }
 
+
+
+.line{
+  width: 100%;
+  border:1px dashed gray;
+}
 
 
 
