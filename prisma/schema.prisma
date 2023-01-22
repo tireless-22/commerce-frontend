@@ -10,86 +10,61 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
-  id    Int     @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   firstName String
-  lastName String
-  email String  @unique
-  password String
-  role String
+  lastName  String
+  email     String   @unique
+  password  String
+  role      String
   createdAt DateTime @default(now()) @map("created_at")
 
-  cart Cart[]
-  order Order[]
+  cart  Cart[]
+  order Orders[]
 }
 
-
-model Item{
-  id    Int     @id @default(autoincrement())
-  name String @unique
+model Item {
+  id          Int         @id @default(autoincrement())
+  name        String      @unique
   description String
-  category String
-  price Int
-  image_id String?
-  quantity Int
-  createdAt DateTime @default(now()) @map("created_at")
-  cart Cart[]
-  orderItem OrderItem[]
-
-
+  category    String
+  price       Int
+  image_id    String?
+  quantity    Int
+  createdAt   DateTime    @default(now()) @map("created_at")
+  cart        Cart[]
+  orderItem   OrderItem[]
 }
 
+model Cart {
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
 
-model Cart{
-   user     User     @relation(fields: [userId], references: [id])
-  userId    Int
-
-
- item     Item     @relation(fields: [itemId], references: [id])
+  item      Item     @relation(fields: [itemId], references: [id])
   itemId    Int
-  quantity Int @default(1)
+  quantity  Int      @default(1)
   createdAt DateTime @default(now()) @map("created_at")
 
-
-  @@id([ userId,itemId])
+  @@id([userId, itemId])
 }
 
-
-model Order{
-   id    String     @id
-   user     User     @relation(fields: [userId], references: [id])
-  userId    Int
+model Orders {
+  id           String      @id @unique
+  user         User        @relation(fields: [userId], references: [id])
+  userId       Int
   total_amount Int
-   createdAt DateTime @default(now()) @map("created_at")
-   orderItem OrderItem[]
-
+  createdAt    DateTime    @default(now()) @map("created_at")
+  orderItem    OrderItem[]
 }
 
-
-model OrderItem{
-  order Order @relation(fields: [orderId],references: [id])
+model OrderItem {
+  order   Orders  @relation(fields: [orderId], references: [id])
   orderId String
 
-
-
-
- item     Item     @relation(fields: [itemId], references: [id])
+  item      Item     @relation(fields: [itemId], references: [id])
   itemId    Int
-  quantity Int @default(1)
-  createdAt DateTime @default(now()) @map("created_at")
+  quantity  Int      @default(1)
 
 
-  @@id([ orderId,itemId])
-
-
-
-
-
+  @@id([orderId, itemId])
 }
-
-
-
-
-
-

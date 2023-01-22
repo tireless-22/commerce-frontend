@@ -69,7 +69,7 @@ const Cart = () => {
 
     axios
       .post(
-        `http://localhost:8080/untitled1/order?id=${id}&userId=${userId}&price=90`
+        `http://localhost:8080/untitled1/order?id=${id}&userId=${userId}&price=${cartPrice}`
       )
       .then((res) => {
         console.log("hello")
