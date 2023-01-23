@@ -19,7 +19,7 @@ const customStyles = {
     right: "auto",
     bottom: "auto",
     width: "700px",
-    height:"550px",
+    height:"700px",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
   },
@@ -146,9 +146,13 @@ const Index = () => {
   }
 
 
-  const deleteItem = (id) => {
-    console.log(id);
-  };
+  // const deleteItem = (id) => {
+  //   console.log(id);
+
+  //   axios.post(`http://localhost:8080/untitled1/deleteItem?id=${id}`).then((res) => {
+  //     console.log(res.data)
+  //   })
+  // };
 
   function closeModal() {
     setIsOpen(false);
@@ -339,14 +343,14 @@ const Index = () => {
                 />
               </div>
 
-              <div>
+              {/* <div>
                 <AiFillDelete
                   size="30"
                   onClick={() => {
                     deleteItem(item.id);
                   }}
                 />
-              </div>
+              </div> */}
             </div>
           </div>
         ))}
@@ -359,6 +363,10 @@ const Index = () => {
       >
         <div className="admin-item-modify ">
           <div className="admin-item-sub-modify mt-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Name
+            </label>
+
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="name"
@@ -371,6 +379,10 @@ const Index = () => {
           </div>
 
           <div className="admin-item-sub-modify mt-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              description
+            </label>
+
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="description"
@@ -383,6 +395,10 @@ const Index = () => {
           </div>
 
           <div className="admin-item-sub-modify">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Price
+            </label>
+
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="price"
@@ -395,6 +411,10 @@ const Index = () => {
           </div>
 
           <div className="admin-item-sub-modify">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Image
+            </label>
+
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="file_input"
@@ -421,6 +441,10 @@ const Index = () => {
           </div>
 
           <div className="admin-item-sub-modify">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Quantity
+            </label>
+
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="name"

@@ -264,6 +264,7 @@
 .admin-item-sub-modify{
   display: flex;
   flex:1;
+  flex-direction: column;
   width: 100%;
   justify-content: center;
   margin-top: 16px;
