@@ -16,6 +16,8 @@ import { IoAddCircleOutline } from "react-icons/io5";
 
 import axios from "axios";
 import Router from "next/router";
+import { IoArrowForward } from "react-icons/io5";
+import { FaGreaterThan } from "react-icons/fa";
 const Cart = () => {
   let userMail = "";
   let userId = "";
@@ -110,6 +112,28 @@ const Cart = () => {
   return (
     <div>
       <NavbarUser />
+
+      <div className="mt-8 navigation flex items-center flex-row">
+        <p className="text-2xl">User</p>&nbsp;&nbsp;
+        <FaGreaterThan />
+        &nbsp;
+        <p className="text-2xl"> Cart</p>
+        <p
+          onClick={() => {
+            Router.push("/user/items");
+          }}
+          className="text-2xl ml-8 cursor-pointer text-blue-500"
+        >
+          
+          Go to Shopping zone
+        </p>
+        <IoArrowForward
+          onClick={() => {
+            Router.push("/user/items");
+          }}
+          className="text-2xlcursor-pointer text-blue-500"
+        />
+      </div>
 
       {listItems.length === 0 ? (
         <div className="mt-12 flex flex-col justify-center align-middle items-center">

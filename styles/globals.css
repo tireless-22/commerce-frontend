@@ -95,6 +95,16 @@
   margin: auto;
 }
 
+.navigation{
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  /* height: 100%; */
+  margin: auto;
+  margin-top: 16px;
+
+}
+
 
 .admin-container {
   display: flex;
@@ -224,6 +234,20 @@
 
 }
 
+
+.admin-item-modify{
+    display: flex;
+  flex-direction: column;
+  padding: 20px;
+  /* background-color: rgb(179, 179, 245); */
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 5px 20px;
+
+
+}
+
+
 .admin-item-sub{
   display: flex;
   flex:1;
@@ -235,6 +259,21 @@
   flex:2;
   justify-content: center;
 }
+
+
+.admin-item-sub-modify{
+  display: flex;
+  flex:1;
+  width: 100%;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+
+.modal{
+  /* width: 500px; */
+}
+
 
 
 

@@ -9,6 +9,9 @@ import moment from "moment/moment";
 
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../utils/firebase";
+import {IoArrowForward} from "react-icons/io5"
+
+import {FaGreaterThan} from "react-icons/fa"
 
 const Orders = () => {
   let userMail = "";
@@ -35,7 +38,6 @@ const Orders = () => {
   }
 
   const [ordersList, setOrdersList] = useState();
- 
 
   useEffect(() => {
     console.log("hello");
@@ -44,7 +46,7 @@ const Orders = () => {
       .then((res) => {
         console.log("orderList", res.data);
         setOrdersList(res.data);
-        console.log(ordersList)
+        console.log(ordersList);
       });
   }, [userId, userMail]);
 
@@ -92,7 +94,29 @@ const Orders = () => {
   return (
     <div>
       <NavbarUser />
+
       <div className="order-items">
+        <div className="mt-4 flex items-center flex-row">
+          <p className="text-2xl">User</p>&nbsp;&nbsp;
+          <FaGreaterThan />
+          &nbsp;
+          <p className="text-2xl"> Orders</p>
+          <p
+            onClick={() => {
+              Router.push("/user/items");
+            }}
+            className="text-2xl ml-8 cursor-pointer text-blue-500"
+          >
+          
+            Go to Shopping zone
+          </p>
+          <IoArrowForward
+            onClick={() => {
+              Router.push("/user/items");
+            }}
+            className="text-2xl ursor-pointer text-blue-500"
+          />
+        </div>
         {ordersList.map((order) => (
           <div key={ordersList.orderId} className="p-8 mt-4 mb-4 shadow-lg">
             <div className="mb-2">
@@ -102,7 +126,6 @@ const Orders = () => {
             </div>
 
             <div className="order-item ">
-              {/* <div>{order.imageId}</div> */}
               <div className="order-item-item">
                 <Image
                   src={`https://firebasestorage.googleapis.com/v0/b/contest-4f331.appspot.com/o/images%2F${order.image_id}?alt=media`}
@@ -110,24 +133,26 @@ const Orders = () => {
                   height={120}
                   alt={order.name}
                 />
-                {/* <Image src={phone} height="120" width="120" alt="image" /> */}
               </div>
 
               <div className="order-item-item text-2xl mt-2">{order.name}</div>
 
               <div className="order-item-item aligin-middle items-center">
-                <p className="order-item-item text-xl">
-                  Price &nbsp; ₹{order.price}
+                <p className="text-2xl">Price</p>
+
+                <p className="order-item-item text-lg">₹{order.price}</p>
+              </div>
+
+              <div className="order-item-item">
+                <p className="text-2xl">Quantity</p>
+                <p className="text-lg">&nbsp; {order.quantity}</p>
+              </div>
+
+              <div className="order-item-item">
+                <p className="text-2xl">Delivered On &nbsp;</p>
+                <p className="text-lg">
+                  {moment(order.created_at).format("DD/MMM  ")}
                 </p>
-              </div>
-
-              <div className="order-item-item">
-                Quantity &nbsp; {order.quantity}
-              </div>
-
-              <div className="order-item-item">
-                Delivered On &nbsp;
-                {moment(order.created_at).format("DD/MMM  ")}
               </div>
             </div>
           </div>

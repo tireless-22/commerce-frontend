@@ -52,7 +52,7 @@ const NavbarAdmin = () => {
             onClick={() => {
               logout();
             }}
-            className="bg-red-500 rounded-lg m-2 p-2 pl-8 pr-8 flex  "
+            className="bg-red-500 rounded-lg m-2 p-2 pl-8 pr-8 flex cursor-pointer "
           >
             <h3 className="text-white  text-2xl">Logout</h3>
           </div>
