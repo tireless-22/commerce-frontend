@@ -21,6 +21,7 @@ import Router from "next/router";
 import { v4 } from "uuid";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../utils/firebase";
+import Link from "next/link";
 
 const Index = () => {
   let userMail = "";
@@ -243,7 +244,20 @@ const Index = () => {
             <div className="admin-item-sub">{item.name}</div>
             <div className="admin-item-sub">{item.description}</div>
             <div className="admin-item-sub">{item.price}</div>
-            <div className="admin-item-sub2">{item.image_id}</div>
+
+            <div className="admin-item-sub2">
+              <p className="text-blue-500 cursor-pointer"
+                onClick={() => {
+                  window.open(
+                    `https://firebasestorage.googleapis.com/v0/b/contest-4f331.appspot.com/o/images%2F${item.image_id}?alt=media`,
+                    "_blank"
+                  );
+                
+                }}
+              >
+                Link
+              </p>
+            </div>
             <div className="admin-item-sub">{item.quantity}</div>
             <div className="admin-item-sub">
               <div className="mr-4">

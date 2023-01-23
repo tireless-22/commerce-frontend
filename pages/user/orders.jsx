@@ -44,6 +44,7 @@ const Orders = () => {
       .then((res) => {
         console.log("orderList", res.data);
         setOrdersList(res.data);
+        console.log(ordersList)
       });
   }, [userId, userMail]);
 
@@ -104,7 +105,7 @@ const Orders = () => {
               {/* <div>{order.imageId}</div> */}
               <div className="order-item-item">
                 <Image
-                  src={`https://firebasestorage.googleapis.com/v0/b/contest-4f331.appspot.com/o/images%2F${order.imageId}?alt=media`}
+                  src={`https://firebasestorage.googleapis.com/v0/b/contest-4f331.appspot.com/o/images%2F${order.image_id}?alt=media`}
                   width={120}
                   height={120}
                   alt={order.name}
