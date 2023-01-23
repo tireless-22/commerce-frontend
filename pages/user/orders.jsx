@@ -6,6 +6,10 @@ import Router from "next/router";
 import Image from "next/image";
 import phone from "../../images/phone.jpeg";
 import moment from "moment/moment";
+
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "../../utils/firebase";
+
 const Orders = () => {
   let userMail = "";
   let userId = "";
@@ -31,6 +35,7 @@ const Orders = () => {
   }
 
   const [ordersList, setOrdersList] = useState();
+ 
 
   useEffect(() => {
     console.log("hello");
@@ -43,6 +48,42 @@ const Orders = () => {
   }, [userId, userMail]);
 
   console.log("ordersList", ordersList);
+
+  const createAItem = () => {
+    setError("");
+
+    if (imageUpload == null || clubName === "" || clubType === "") {
+      setError("Please fill all the fields");
+      return;
+    }
+
+    const imageRef = ref(storage, `images/${v4()}`);
+
+    uploadBytes(imageRef, imageUpload).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then((url) => {
+        const name = clubName;
+        const description = clubDescription;
+        console.log(url);
+
+        let fileUrl = imageRef._location.path_;
+        fileUrl = fileUrl.slice(7);
+
+        Axios.post("/api/club/create", {
+          name: name.trim(),
+          clubType: clubType.trim(),
+          fileUrl: fileUrl,
+        })
+          .then((response) => {
+            console.log(response.data);
+            setPassMessage("Club created successfully");
+            Router.reload();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+    });
+  };
 
   if (!ordersList) {
     return <Loading />;
@@ -80,7 +121,6 @@ const Orders = () => {
               <div className="order-item-item">
                 Delivered On &nbsp;
                 {moment(order.created_at).format("DD/MMM  ")}
-                
               </div>
             </div>
           </div>

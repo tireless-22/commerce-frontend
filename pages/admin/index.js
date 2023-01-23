@@ -1,5 +1,5 @@
 import { list } from "postcss";
-import React, { useEffect, useState } from "react";
+import React, { useEffect,useRef, useState } from "react";
 import useSWRImmutable from "swr/immutable";
 
 import { getFetcher } from "../../utils/swr";
@@ -18,6 +18,9 @@ import { AiFillDelete } from "react-icons/ai";
 
 import axios from "axios";
 import Router from "next/router";
+import { v4 } from "uuid";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "../../utils/firebase";
 
 const Index = () => {
   let userMail = "";
@@ -32,6 +35,14 @@ const Index = () => {
   const [price, setPrice] = useState("");
   const [imageId, setImageId] = useState("");
   const [quantity, setQuantity] = useState("");
+
+  const [imageUpload, setImageUpload] = useState(null);
+  const imagesListRef = ref(storage, "images/");
+  const [error, setError] = useState("");
+  const [passMessage, setPassMessage] = useState("");
+  const [update, setUpdate] = useState("");
+
+  const fileRef = useRef(null);
 
   if (typeof window !== "undefined") {
     console.log(localStorage.getItem("email"));
@@ -51,17 +62,72 @@ const Index = () => {
       Router.push("/user/items/");
     }
   }
-  console.log("listItems", listItems);
+  // console.log("listItems", listItems);
 
   useEffect(() => {
     axios.post(`http://localhost:8080/untitled1/items`).then((res) => {
       setListItems(res.data);
     });
-  }, [userId]);
+  }, [userId,update]);
 
   if (!listItems) {
     return <Loading />;
   }
+
+  const createAItem = () => {
+
+    setPassMessage("");
+    setError("");
+    console.log(name);
+    console.log(description);
+    console.log(price);
+    console.log(quantity);
+    console.log(imageUpload);
+
+    setError("");
+
+    if (
+      name === "" ||
+      description === "" ||
+      price === "" ||
+      quantity === "" ||
+      imageUpload === ""
+    ) {
+      console.log("Please fill all the fields");
+      setError("Please fill all the fields");
+      return;
+    }
+
+    const imageRef = ref(storage, `images/${v4()}`);
+    console.log(imageRef);
+
+    uploadBytes(imageRef, imageUpload).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then((url) => {
+        let fileUrl = imageRef._location.path_;
+        fileUrl = fileUrl.slice(7);
+        console.log(fileUrl);
+        
+
+        axios
+          .post(
+            `http://localhost:8080/untitled1/addItem?name=${name}&description=${description}&price=${price}&quantity=${quantity}&image_id=${fileUrl}`
+          )
+          .then((res) => {
+            // console.log("response data".res.data);
+            setPassMessage("uploaded successfully");
+            setUpdate(fileUrl);
+            setName("");
+            setDescription("");
+            setPrice("");
+            setQuantity("");
+            fileRef.current.value = null;
+            console.log("fileRef",fileRef.current.value)
+
+            // Router.reload()
+          });
+      });
+    });
+  };
 
   return (
     <div className="admin-container">
@@ -72,65 +138,103 @@ const Index = () => {
           <div className="admin-item-sub">DESCRIPTION</div>
 
           <div className="admin-item-sub">PRICE</div>
-          <div className="admin-item-sub">IMAGE ID</div>
+          <div className="admin-item-sub2">IMAGE ID</div>
           <div className="admin-item-sub">QUANTITY</div>
           <div className="admin-item-sub"></div>
         </div>
 
-        <div className="admin-item-add">
-          <div className="admin-item-sub">
-            <input
-              className="shadow appearance-none border rounded w-2/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="name"
-              type="text"
-              placeholder="name"
-              autocomplete="off"
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-          <div className="admin-item-sub">
-            <input
-              className="shadow appearance-none border rounded w-2/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="description"
-              type="text"
-              placeholder="Description"
-              autocomplete="off"
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </div>
+        <div className="flex flex-col">
+          <div className="admin-item-add">
+            <div className="admin-item-sub">
+              <input
+                className="shadow appearance-none border rounded w-2/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="name"
+                type="text"
+                placeholder="name"
+                value={name}
+                autocomplete="off"
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div className="admin-item-sub">
+              <input
+                className="shadow appearance-none border rounded w-2/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="description"
+                type="text"
+                placeholder="Description"
+                value={description}
+                autocomplete="off"
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </div>
 
-          <div className="admin-item-sub">
-            <input
-              className="shadow appearance-none border rounded w-2/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="price"
-              type="text"
-              placeholder="price"
-              autocomplete="off"
-              onChange={(e) => setPrice(e.target.value)}
-            />
-          </div>
-          <div className="admin-item-sub"></div>
-          <div className="admin-item-sub">
-            <input
-              className="shadow appearance-none border rounded w-3/4 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="name"
-              type="text"
-              placeholder="quantity"
-              autocomplete="off"
-              onChange={(e) => setQuantity(e.target.value)}
-            />
-          </div>
-          <div className="admin-item-sub  ">
-            <div className="bg-green-600 rounded-xl p-2 pl-8 pr-8">
-              <div className="flex flex-row">
-                <div className="flex justify-center align-middle">
-                  <p className="text-xl mt-1 text-white">ADD</p>
-                </div>
-                <div>
-                  <IoAddCircleSharp className=" rounded-lg " color="white" size="35" />
+            <div className="admin-item-sub">
+              <input
+                className="shadow appearance-none border rounded w-2/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="price"
+                type="text"
+                value={price}
+                placeholder="price"
+                autocomplete="off"
+                onChange={(e) => setPrice(e.target.value)}
+              />
+            </div>
+            <div className="admin-item-sub2">
+              <input
+                className="shadow appearance-none border rounded w-4/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="file_input"
+                ref={fileRef}
+                // value={imageUpload}
+                type="file"
+                onChange={(e) => setImageUpload(e.target.files[0])}
+              />
+            </div>
+            <div className="admin-item-sub">
+              <input
+                className="shadow appearance-none border rounded w-3/4 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="name"
+                type="text"
+                value={quantity}
+                placeholder="quantity"
+                autocomplete="off"
+                onChange={(e) => setQuantity(e.target.value)}
+              />
+            </div>
+            <div className="admin-item-sub  ">
+              <div className="bg-green-600 rounded-xl p-2 pl-8 pr-8">
+                <div
+                  className="flex flex-row"
+                  onClick={() => {
+                    createAItem();
+                  }}
+                >
+                  <div className="flex justify-center align-middle">
+                    <p className="text-xl mt-1 text-white">ADD</p>
+                  </div>
+                  <div>
+                    <IoAddCircleSharp
+                      className=" rounded-lg "
+                      color="white"
+                      size="35"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
+          </div>
+
+          <div className="flex justify-center mt-2 mb-2">
+            {error != "" ? (
+              <div className="p-2  pl-8 pr-8 rounded-lg">
+                <p className="text-lg text-red-500">{error}</p>
+              </div>
+            ) : passMessage != "" ? (
+              <div className="p-2 pl-8 pr-8 rounded-lg">
+                <p className="text-lg text-green-500">{passMessage}</p>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
 
@@ -139,7 +243,7 @@ const Index = () => {
             <div className="admin-item-sub">{item.name}</div>
             <div className="admin-item-sub">{item.description}</div>
             <div className="admin-item-sub">{item.price}</div>
-            <div className="admin-item-sub">{item.image_id}</div>
+            <div className="admin-item-sub2">{item.image_id}</div>
             <div className="admin-item-sub">{item.quantity}</div>
             <div className="admin-item-sub">
               <div className="mr-4">

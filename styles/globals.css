@@ -230,6 +230,13 @@
   justify-content: center;
 }
 
+.admin-item-sub2{
+  display: flex;
+  flex:2;
+  justify-content: center;
+}
+
+
 
 
 

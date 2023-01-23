@@ -11,12 +11,10 @@ const firebaseConfig = {
   appId: "1:356288107580:web:6d0e472a1fe07a63e79f39",
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const storage = getStorage(app);
 
-export const getReceiptDownloadURL = async (path) => {
-  // const path = "images/f51617ad-8de1-4d36-8230-4731dbb7e7fb";
+export const getDownloadImageURL = async (path) => {
   const fileref = ref(storage, path);
   const url = await getDownloadURL(fileref);
   return url;
