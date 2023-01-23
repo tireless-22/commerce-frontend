@@ -49,9 +49,11 @@ const Items = () => {
       .post(`http://localhost:8080/untitled1/listItems?userId=${userId}`)
       .then((res) => {
         setListItems(res.data);
+        // console.log(listItems);
       });
   }, [userId, itemId]);
 
+  console.log(listItems)
   const addNewItem = (id) => {
     console.log(id);
     console.log(userId);
@@ -103,7 +105,13 @@ const Items = () => {
         {listItems.map((item) => (
           <div className="item-box shadow-2xl p-4 " key={item.id}>
             <div className="item-image-container flex p-4 ">
-              <Image src={phone} alt={item.name} height={300} width={300} />
+              {/* <Image src={phone} alt={item.name} height={300} width={300} /> */}
+              <Image
+                src={`https://firebasestorage.googleapis.com/v0/b/contest-4f331.appspot.com/o/images%2F${item.image_id}?alt=media`}
+                width={300}
+                height={300}
+                alt={item.name}
+              />
             </div>
             <div className="flex justify-center">
               <h3 className="text-2xl">{item.name}</h3>

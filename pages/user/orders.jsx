@@ -103,7 +103,13 @@ const Orders = () => {
             <div className="order-item ">
               {/* <div>{order.imageId}</div> */}
               <div className="order-item-item">
-                <Image src={phone} height="120" width="120" alt="image" />
+                <Image
+                  src={`https://firebasestorage.googleapis.com/v0/b/contest-4f331.appspot.com/o/images%2F${order.imageId}?alt=media`}
+                  width={120}
+                  height={120}
+                  alt={order.name}
+                />
+                {/* <Image src={phone} height="120" width="120" alt="image" /> */}
               </div>
 
               <div className="order-item-item text-2xl mt-2">{order.name}</div>

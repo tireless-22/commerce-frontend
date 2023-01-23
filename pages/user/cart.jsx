@@ -50,6 +50,7 @@ const Cart = () => {
       .post(`http://localhost:8080/untitled1/cartItems?userId=${userId}`)
       .then((res) => {
         setListItems(res.data);
+        console.log(listItems)
       });
 
     axios
@@ -141,11 +142,17 @@ const Cart = () => {
                 <div className="item-box1  shadow-md mb-8 p-4 " key={item.id}>
                   <div className="item-box1-left">
                     <div className="item-image-container flex p-2 ">
-                      <Image
+                      {/* <Image
                         src={phone}
                         alt={item.name}
                         height={200}
                         width={200}
+                      /> */}
+                      <Image
+                        src={`https://firebasestorage.googleapis.com/v0/b/contest-4f331.appspot.com/o/images%2F${item.imageId}?alt=media`}
+                        width={200}
+                        height={200}
+                        alt={item.name}
                       />
                     </div>
                   </div>
