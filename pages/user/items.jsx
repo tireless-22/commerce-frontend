@@ -5,7 +5,7 @@ import useSWRImmutable from "swr/immutable";
 import { getFetcher } from "../../utils/swr";
 import Loading from "../../components/loading";
 import Image from "next/image";
-import { BsCartPlusFill } from "react-icons/bs";
+import { BsCartPlusFill, BsQuestionSquare } from "react-icons/bs";
 import phone from "../../images/phone.jpeg";
 import NavbarUser from "@/components/navbarUser";
 
@@ -67,10 +67,15 @@ const Items = () => {
       });
   };
 
-  const updateItem = (id, quantity) => {
+  const updateItem = (id, quantity,available) => {
     if (quantity == 0) {
       return;
     }
+    console.log(quantity,available)
+
+     if (quantity > available) {
+       return;
+     }
     console.log(id);
     console.log(userId);
 
@@ -140,7 +145,7 @@ const Items = () => {
                   <div className="mr-3 pt-1">
                     <GrSubtractCircle
                       onClick={() => {
-                        updateItem(item.id, item.quantity - 1);
+                        updateItem(item.id, item.quantity - 1,item.available);
                       }}
                       size="30"
                       className="cursor-pointer"
@@ -154,7 +159,7 @@ const Items = () => {
                   <div className="ml-3 ">
                     <IoAddCircleOutline
                       onClick={() => {
-                        updateItem(item.id, item.quantity + 1);
+                        updateItem(item.id, item.quantity + 1,item.available);
                       }}
                       size="38"
                       className="cursor-pointer"

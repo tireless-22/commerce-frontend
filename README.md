@@ -1,22 +1,21 @@
+<!-- pagination -->
 
 
 
+sorting based on items
 
+<!-- filter for alert items -->
 
 TODO
 
 
-user
 
-Sign in
-Sign up
+<!-- Order Tracking tab a search which show all the orderid if he select and get details we will show those to him-->
 
 
-admin
+<!-- Analytics to show them that which day how much sales had happened   -->
 
-Sign in 
-Sign up
-
+<!-- analytics tab to check based on the order Id  -->
 
 
 

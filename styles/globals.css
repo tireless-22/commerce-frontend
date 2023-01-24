@@ -327,3 +327,61 @@
   flex:1;
 }
 
+
+.table {
+	display: flex;   /* Allow the centering to work */
+	margin: 0 auto;
+  justify-content: center;
+
+
+}
+
+.horizontal-list{
+  margin-bottom: 20px;
+  
+}
+
+ul.horizontal-list {
+
+	list-style: none;
+	padding-top: 20px;
+	}
+	ul.horizontal-list li {
+		display: inline;
+	}
+
+  .previous{
+    display: flex;
+
+    padding:10px;
+    margin-right: 10px;
+    border: 1px solid black;
+  }
+
+  .next{
+    display: flex;
+  
+    padding:10px;
+    margin-left: 10px;
+    border: 1px solid black;
+
+  }
+
+
+  .disabled{
+    display: flex;
+    
+        border: 1px solid black;
+    padding:10px;
+    margin-left: 10px;
+
+  }
+   .selected{
+    display: flex;
+    
+    padding:10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border: 1px solid black;
+
+  }

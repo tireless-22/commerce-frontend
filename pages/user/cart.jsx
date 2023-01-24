@@ -76,8 +76,11 @@ const Cart = () => {
       });
   };
 
-  const updateItem = (id, quantity) => {
+  const updateItem = (id, quantity,available) => {
     if (quantity == 0) {
+      return;
+    }
+    if (quantity > available) {
       return;
     }
     console.log(id);
@@ -215,7 +218,7 @@ const Cart = () => {
                           <div
                             className="mr-3 pt-1"
                             onClick={() => {
-                              updateItem(item.id, item.quantity - 1);
+                              updateItem(item.id, item.quantity - 1,item.availabe);
                             }}
                           >
                             <GrSubtractCircle
@@ -231,7 +234,7 @@ const Cart = () => {
                           <div
                             className="ml-3 "
                             onClick={() => {
-                              updateItem(item.id, item.quantity + 1);
+                              updateItem(item.id, item.quantity + 1,item.availabe);
                             }}
                           >
                             <IoAddCircleOutline
