@@ -385,3 +385,70 @@ ul.horizontal-list {
     border: 1px solid black;
 
   }
+
+
+  .track-left{
+    display: flex;
+    flex:3;
+
+  }
+  
+
+
+  .track-right{
+    display: flex;
+    flex: 2;
+
+  }
+
+  .track-main{
+    display: flex;
+    width: 100%;
+     height: calc(100vh - 90px);
+  }
+
+
+.track-left::-webkit-scrollbar {
+  display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

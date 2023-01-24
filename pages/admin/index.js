@@ -108,14 +108,6 @@ const Index = () => {
   const currentItems = listItems.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(listItems.length / 5);
 
-  // const deleteItem = (id) => {
-  //   console.log(id);
-
-  //   axios.post(`http://localhost:8080/untitled1/deleteItem?id=${id}`).then((res) => {
-  //     console.log(res.data)
-  //   })
-  // };
-
   const handleChange = (e) => {
     console.log(e.target.value);
     setSort(e.target.value);
@@ -281,8 +273,8 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="w-4/5 h-4 mt-4 mb-8 m-auto justify-start flex flex-row">
-            <div className="flex flex-1 justify-center items-center">
+          <div className="w-4/5 h-4 mt-4 mb-8 m-auto justify-end flex flex-row">
+            <div className="flex flex-1 justify-end mr-16 items-center">
               <input
                 className="h-4 mr-1"
                 type="checkbox"
