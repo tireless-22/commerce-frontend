@@ -19,7 +19,7 @@ const customStyles = {
     right: "auto",
     bottom: "auto",
     width: "700px",
-    height:"700px",
+    height:"680px",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
   },
@@ -283,12 +283,12 @@ const Index = () => {
                     createAItem();
                   }}
                 >
-                  <div className="flex justify-center align-middle">
+                  <div className="flex justify-center cursor-pointer align-middle">
                     <p className="text-xl mt-1 text-white">ADD</p>
                   </div>
                   <div>
                     <IoAddCircleSharp
-                      className=" rounded-lg "
+                      className=" rounded-lg cursor-pointer "
                       color="white"
                       size="35"
                     />
@@ -336,6 +336,7 @@ const Index = () => {
             <div className="admin-item-sub">
               <div className="mr-4">
                 <AiFillEdit
+                  className="cursor-pointer"
                   onClick={() => {
                     editItem(item.id);
                   }}
@@ -425,13 +426,13 @@ const Index = () => {
             />
           </div>
 
-          <div className="admin-item-sub-modify">
+          <div className="flex flex-row">
             <p>Previous Image:</p>
             <p
               className="text-blue-500 cursor-pointer"
               onClick={() => {
                 window.open(
-                  `https://firebasestorage.googleapis.com/v0/b/contest-4f331.appspot.com/o/images%2F${item.image_id}?alt=media`,
+                  `https://firebasestorage.googleapis.com/v0/b/contest-4f331.appspot.com/o/images%2F${modalImageUpload}?alt=media`,
                   "_blank"
                 );
               }}
@@ -456,7 +457,7 @@ const Index = () => {
             />
           </div>
 
-          <div className="admin-item-sub-modify  ">
+          <div className="admin-item-sub mt-8  ">
             <div className="bg-green-600 rounded-xl p-2 pl-8 pr-8">
               <div
                 className="flex flex-row"
@@ -472,7 +473,7 @@ const Index = () => {
             </div>
           </div>
         </div>
-        <div className="flex justify-center mt-2 mb-2">
+        <div className="flex justify-center  mb-2">
           {error2 != "" ? (
             <div className="p-2  pl-8 pr-8 rounded-lg">
               <p className="text-lg text-red-500">{error2}</p>

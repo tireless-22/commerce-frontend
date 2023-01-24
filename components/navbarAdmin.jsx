@@ -32,33 +32,42 @@ const NavbarAdmin = () => {
   };
 
   return (
-    <div className="main-wrapper bg-blue-400">
-      <div className="width-80">
-        <div className="user-navbar">
-          <div
-            className="flex align-middle p-2"
-            onClick={() => {
-              Router.push("/user/items");
-            }}
-          >
-            <Image src={logo} alt="logo" height={20} width={140} />
-          </div>
+    <>
+      <div className="main-wrapper ">
+        <div className="width-80">
+          <div className="user-navbar">
+            <div className="flex flex-row">
+              <div
+                className="flex align-middle p-2"
+                onClick={() => {
+                  Router.push("/user/items");
+                }}
+              >
+                <Image src={logo} alt="logo" height={20} width={140} />
+              </div>
+            </div>
 
-          <div className="flex align-middle flex-row pt-4">
-            <h3 className="text-black pt-2  text-2xl">Hi, {userMail}</h3>
-          </div>
+            <div className="flex flex-row  items-center ">
+              <div className="flex align-middle flex-row pt-4 mb-4 mr-4">
+                <h3 className="text-black pt-2  text-2xl"> {userMail}</h3>
+              </div>
 
-          <div
-            onClick={() => {
-              logout();
-            }}
-            className="bg-red-500 rounded-lg m-2 p-2 pl-8 pr-8 flex cursor-pointer "
-          >
-            <h3 className="text-white  text-2xl">Logout</h3>
+              <div
+                onClick={() => {
+                  logout();
+                }}
+                className="bg-red-500 rounded-lg m-2 p-2 pl-8 pr-8 flex cursor-pointer "
+              >
+                <h3 className="text-white cursor-pointer text-2xl">Logout</h3>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <div className="line-solid">
+
+      </div>
+    </>
   );
 };
 

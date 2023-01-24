@@ -9,9 +9,9 @@ import moment from "moment/moment";
 
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../utils/firebase";
-import {IoArrowForward} from "react-icons/io5"
+import { IoArrowForward } from "react-icons/io5";
 
-import {FaGreaterThan} from "react-icons/fa"
+import { FaGreaterThan } from "react-icons/fa";
 
 const Orders = () => {
   let userMail = "";
@@ -37,6 +37,7 @@ const Orders = () => {
     }
   }
 
+  const [orderId, setOrderId] = useState(0);
   const [ordersList, setOrdersList] = useState();
 
   useEffect(() => {
@@ -107,7 +108,6 @@ const Orders = () => {
             }}
             className="text-2xl ml-8 cursor-pointer text-blue-500"
           >
-          
             Go to Shopping zone
           </p>
           <IoArrowForward
@@ -117,8 +117,13 @@ const Orders = () => {
             className="text-2xl ursor-pointer text-blue-500"
           />
         </div>
+
+
+
         {ordersList.map((order) => (
           <div key={ordersList.orderId} className="p-8 mt-4 mb-4 shadow-lg">
+
+
             <div className="mb-2">
               <div>
                 <p className="text-lg">Order Id : &nbsp; {order.orderId}</p>
@@ -139,8 +144,7 @@ const Orders = () => {
 
               <div className="order-item-item aligin-middle items-center">
                 <p className="text-2xl">Price</p>
-
-                <p className="order-item-item text-lg">₹{order.price}</p>
+                <p className="text-lg">₹{order.price}</p>
               </div>
 
               <div className="order-item-item">
@@ -154,6 +158,10 @@ const Orders = () => {
                   {moment(order.created_at).format("DD/MMM  ")}
                 </p>
               </div>
+
+
+
+
             </div>
           </div>
         ))}

@@ -193,7 +193,7 @@ const Signup = () => {
                 </button>
 
                 <div
-                  className="text-blue-500"
+                  className="text-blue-500 cursor-pointer"
                   type="submit"
                   onClick={() => (window.location.href = "/admin/login")}
                 >
