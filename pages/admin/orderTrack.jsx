@@ -61,10 +61,10 @@ const OrderTrack = () => {
     <>
       <NavbarAdmin />
       <div className="mt-8 navigation flex items-center flex-row">
-        <p className="text-2xl">User</p>&nbsp;&nbsp;
+        <p className="text-2xl">Admin</p>&nbsp;&nbsp;
         <FaGreaterThan />
         &nbsp;
-        <p className="text-2xl"> Cart</p>
+        <p className="text-2xl"> Order Tracking</p>
         <p
           onClick={() => {
             Router.push("/admin");

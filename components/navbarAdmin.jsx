@@ -19,7 +19,7 @@ const NavbarAdmin = () => {
       : (userMail = "null");
 
     userMail == "null"
-      ? (window.location.href = "/user/login")
+      ? (window.location.href = "/admin/login")
       : console.log("user logged in");
 
     userMail = localStorage.getItem("email");
@@ -33,6 +33,7 @@ const NavbarAdmin = () => {
 
   return (
     <>
+
       <div className="main-wrapper ">
         <div className="width-80">
           <div className="user-navbar">
@@ -48,15 +49,29 @@ const NavbarAdmin = () => {
             </div>
 
             <div className="flex flex-row  items-center ">
-
-
               <div className="flex align-middle cursor-pointer flex-row pt-4 mb-4 mr-8">
-                <h3 onClick={() => {
-                   Router.push("/admin/orderTrack");
-                  
-                }} className="text-black pt-2  text-2xl"> Order Tracking</h3>
+                <h3
+                  onClick={() => {
+                    Router.push("/admin/addItem");
+                  }}
+                  className="text-black pt-2  text-2xl"
+                >
+                  {" "}
+                 Add Item
+                </h3>
               </div>
 
+              <div className="flex align-middle cursor-pointer flex-row pt-4 mb-4 mr-8">
+                <h3
+                  onClick={() => {
+                    Router.push("/admin/orderTrack");
+                  }}
+                  className="text-black pt-2  text-2xl"
+                >
+                  {" "}
+                  Order Tracking
+                </h3>
+              </div>
 
               <div className="flex align-middle flex-row pt-4 mb-4 mr-8">
                 <h3 className="text-black pt-2  text-2xl"> {userMail}</h3>

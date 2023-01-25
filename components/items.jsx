@@ -8,6 +8,8 @@ import axios from "axios";
 import { AiFillEdit } from "react-icons/ai";
 import Modal from "react-modal"
 import { IoAlertCircle } from "react-icons/io5";
+import Image from "next/image";
+import {AiFillCloseSquare} from "react-icons/ai"
 
 
 const customStyles = {
@@ -22,6 +24,20 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
   },
 };
+
+const customStyles2 = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    width: "600px",
+    height: "600px",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
+
 
 
 const Items = ({ currentItems }) => {
@@ -43,7 +59,10 @@ const Items = ({ currentItems }) => {
     const [fewQuantity, setFewQuantity] = useState(false);
     const [error2, setError2] = useState("");
     const [passMessage2, setPassMessage2] = useState("");
- const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+  
+  const [imageEnlarge, setImageEnlarge] = useState(false);
+  const [enlargedImage,setEnlargedImage]=useState("")
   
   
   
@@ -119,25 +138,24 @@ const Items = ({ currentItems }) => {
     <div>
       {currentItems.map((item) => (
         <div className="admin-item" key={item.id}>
-          <div className="admin-item-sub">
+          <div className="admin-item-sub ">
             {item.quantity <= 10 && <IoAlertCircle color="red" size="25" />}
             {item.name}
           </div>
           <div className="admin-item-sub">{item.description}</div>
           <div className="admin-item-sub">{item.price}</div>
 
-          <div className="admin-item-sub2">
-            <p
-              className="text-blue-500 cursor-pointer"
+          <div className="admin-item-sub">
+            <Image
               onClick={() => {
-                window.open(
-                  `https://firebasestorage.googleapis.com/v0/b/contest-4f331.appspot.com/o/images%2F${item.image_id}?alt=media`,
-                  "_blank"
-                );
+                setEnlargedImage(item.image_id);
+                setImageEnlarge(true);
               }}
-            >
-              Link
-            </p>
+              src={`https://firebasestorage.googleapis.com/v0/b/contest-4f331.appspot.com/o/images%2F${item.image_id}?alt=media`}
+              height="80"
+              width="80"
+              alt="image here"
+            />
           </div>
           <div className="admin-item-sub">{item.quantity}</div>
           <div className="admin-item-sub">
@@ -155,11 +173,43 @@ const Items = ({ currentItems }) => {
       ))}
 
       <Modal
+        isOpen={imageEnlarge}
+        onRequestClose={()=>setImageEnlarge(false)}
+        style={customStyles2}
+       
+      >
+
+
+        <div className="flex justify-end">
+          <AiFillCloseSquare size="30"
+            className="cursor-pointer"
+          
+            onClick={() => {
+
+           setImageEnlarge(false);
+          }}
+          />
+
+        </div>
+        <div className=" justify-center items-center m-auto ">
+          <Image
+            onClick={() => {}}
+            src={`https://firebasestorage.googleapis.com/v0/b/contest-4f331.appspot.com/o/images%2F${enlargedImage}?alt=media`}
+            height="500"
+            width="500"
+            alt="image here"
+          />
+        </div>
+      </Modal>
+
+      <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={customStyles}
       >
         <div className="admin-item-modify ">
+
+
           <div className="admin-item-sub-modify mt-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
               Name
